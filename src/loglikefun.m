@@ -16,6 +16,11 @@ ydata = data.ydata;
 if ~isempty(theta)
     pars = update_pars(pars,theta,mcmcpars);
 end
+
+%%%%%  this was not included before.
+pars.eta(pars.tau>0) = 1./pars.tau(pars.tau>0);
+
+
 S0 = pars.S0;
 V0 = pars.V0;
 [~,S,V] = simulate_ode(model,pars,tvec,S0,V0);

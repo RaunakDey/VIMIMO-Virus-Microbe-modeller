@@ -311,7 +311,7 @@ ylim([1e4 1e11]);
 
 
 subplot(2,5,10)
-errorbar(time/60,mean(1e3*virus5'),std(1e3*virus5'),'o','MarkerSize',8, 'MarkerEdgeColor','k','MarkerFaceColor',[70/255,130/255,180/255]);hold on;
+errorbar(time/60,mean(1e3*virus5'),std(1e3*virus5'),'o','MarkerSize',8, 'MarkerEdgeColor','k','MarkerFaceColor',[70/255,130/255,180/255],Color=[70/255,130/255,180/255]);hold on;
 set(gca, 'YScale', 'log');set(gca,'fontname','times')  % Set it to times
 ylim([1e4 1e11]);
     xlim([0 16]);
