@@ -1,6 +1,13 @@
 %load('./../corrected3/revised80002.mat');
 %close all;
-load('./../corrected3/revised90015.mat');
+
+%load('./../corrected3/revised90015.mat');
+
+%load('./../corrected4/from_os_prior_20000.mat');
+%load('./../corrected4/v14-4.mat');
+load('./../corrected4/v17.mat');
+
+
 close all;
 
 
@@ -47,7 +54,7 @@ set(gca, 'YScale', 'log');
     
   %%
 
-for i = 100:10:2000
+for i = 100:100:5000
  pars_samples = update_pars(pars2,chain(i,:),mcmcpars);
  pars_samples.beta2 = pars_samples.beta;
 
@@ -86,5 +93,101 @@ for i = 100:10:2000
 
 
 end
+
+%% touch up
+
+figure(1)
+
+subplot(2,5,1)
+hold on;
+set(gca,'FontSize',14);
+title('CBA 4');
+ylabel('Host density (cells/ml)')
+xticks(0:2:16);
+ylim([1e5 1e8]);
+yticks([1e5, 1e6, 1e7, 1e8]);
+
+subplot(2,5,2)
+hold on;
+set(gca,'FontSize',14);
+title('CBA 18');
+xticks(0:2:16);
+ylim([1e5 1e8]);
+yticks([1e5, 1e6, 1e7, 1e8]);
+
+
+subplot(2,5,3)
+hold on;
+set(gca,'FontSize',14);
+title('CBA 38');
+xticks(0:2:16);
+ylim([1e5 1e8]);
+yticks([1e5, 1e6, 1e7, 1e8]);
+
+subplot(2,5,4)
+hold on;
+set(gca,'FontSize',14);
+title('PSA H100');
+xticks(0:2:16);
+ylim([1e5 1e8]);
+yticks([1e5, 1e6, 1e7, 1e8]);
+
+subplot(2,5,5)
+hold on;
+set(gca,'FontSize',14);
+title('PSA 13-15');
+xticks(0:2:16);
+ylim([1e5 1e8]);
+yticks([1e5, 1e6, 1e7, 1e8]);
+
+
+subplot(2,5,6)
+hold on;
+set(gca,'FontSize',14);
+title('\phi18:2');
+ylabel('Phage density (virions/ml)')
+xticks(0:2:16);
+ylim([1e4 1e11]);
+yticks([1e4, 1e6, 1e8, 1e10]);
+
+
+
+
+subplot(2,5,7)
+hold on;
+set(gca,'FontSize',14);
+title('\phi18:3');
+xticks(0:2:16);
+ylim([1e4 1e11]);
+yticks([1e4, 1e6, 1e8, 1e10]);
+
+
+
+subplot(2,5,8)
+hold on;
+set(gca,'FontSize',14);
+title('\phi38:1');
+xticks(0:2:16);
+ylim([1e4 1e11]);
+yticks([1e4, 1e6, 1e8, 1e10]);
+xlabel('Time (hrs)')
+
+
+subplot(2,5,9)
+hold on;
+set(gca,'FontSize',14);
+title('PSA HP1');
+xticks(0:2:16);
+ylim([1e4 1e11]);
+yticks([1e4, 1e6, 1e8, 1e10]);
+
+
+subplot(2,5,10)
+hold on;
+set(gca,'FontSize',14);
+title('PSA HS6');
+xticks(0:2:16);
+ylim([1e4 1e11]);
+yticks([1e4, 1e6, 1e8, 1e10]);
 
     

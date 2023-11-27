@@ -1,11 +1,11 @@
 clear all;
 clc;
 
-mean_tau = 5;
+mean_tau = 2;
 x = 0:0.01:2*mean_tau;
 
 i=0;
-NE = [1,10,25,50,100];
+NE = [1,10,100];
 
 
 hf = figure;
@@ -17,7 +17,7 @@ i=i+1;
 ha(i) = subplot(length(NE),1,i)
 plot(x,pdf,'LineStyle','-','LineWidth',2);hold on;yticks([]);
 set(gca,'FontSize',20)
-
+yticks([0 0.3 0.6 0.9 1.2 1.5 1.8 2.1]);
 line([mean_tau, mean_tau], [0, max(pdf)], 'Color', [0.1,0.1,0.1],'LineStyle','--',LineWidth=2);
 
 
@@ -44,7 +44,7 @@ dim = cellfun(@(x) x.*[1 1 0.5 0.5], pos, 'uni',0);
 for i = 1: length(NE)
 
 CV = 1/sqrt(NE(i));
-annotation(hf, 'textbox', dim{i}, 'String',  strcat('CV = ','  ',num2str(CV,2), '; ',' N_E =   ',num2str(NE(i)) )  ,'Position', ha(i).Position + [0.63 0 0 0],'EdgeColor','none', 'FontSize',14,'verticalalignment', 'top','FitBoxToText','on') ;
+annotation(hf, 'textbox', dim{i}, 'String',  strcat('CV = ','  ',num2str(CV,2), '; ',' N_E =   ',num2str(NE(i)) )  ,'Position', ha(i).Position + [0.45 0 0 0],'EdgeColor','none', 'FontSize',20,'verticalalignment', 'top','FitBoxToText','on') ;
 
 end
 

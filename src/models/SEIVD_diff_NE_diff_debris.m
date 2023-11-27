@@ -52,7 +52,7 @@ classdef SEIVD_diff_NE_diff_debris < ode_funs
             V = y(obj.id.V);
             D = y(obj.id.D);
             N = S+sum(Emat,3)*OV+Imat*OV;
-            etaeff = pars.eta*(obj.NE+1);
+            etaeff = pars.eta*(pars.NE+1);
 
             exposed_transition_fun = obj.exposed_transition_fun;
             host_growth_fun = obj.host_growth_fun;

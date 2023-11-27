@@ -74,15 +74,25 @@ classdef SEIVD_diff_NE_diff_debris_abs_diffbeta < ode_funs
             Sdeb(1) =  y(1)*debris_inhib_fun(pars,D); % debris
             Sdeb(2) =  y(2)*debris_inhib_fun_second(pars,D);
             Sdeb(3) =  y(3)*debris_inhib_fun_third(pars,D);
+
+             %Sdeb(1) =  y(1);
+             %Sdeb(2) =  y(2);
+             %Sdeb(3) =  y(3);
+
             Sdeb(4) =  y(4)*debris_inhib_fun_fourth(pars,D);
             Sdeb(5) =  y(5)*debris_inhib_fun_fifth(pars,D);
             
-
+            %Sdeb = y;
             
 
             Ndeb(1) =  N(1)*debris_inhib_fun(pars,D); % debris
             Ndeb(2) =  N(2)*debris_inhib_fun_second(pars,D);
             Ndeb(3) =  N(3)*debris_inhib_fun_third(pars,D);
+            
+%             Ndeb(1) =  N(1);
+%             Ndeb(2) =  N(2);
+%             Ndeb(3) =  N(3);
+
             Ndeb(4) =  N(4)*debris_inhib_fun_fourth(pars,D);
             Ndeb(5) =  N(5)*debris_inhib_fun_fifth(pars,D);
             

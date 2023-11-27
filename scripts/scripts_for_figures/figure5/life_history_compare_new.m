@@ -5,8 +5,14 @@ clc;
 x=1:9;
 
 %load('./../SEIV70_00000_Dbeprt_1001/seed314L0_datasheet.mat');
-load('./../../results/local/SEIV70_00000_Dbeprt_1001/seed341L0_datasheet.mat')
-start_new = 7000;
+
+%load('./../../results/local/SEIV70_00000_Dbeprt_1001/seed341L0_datasheet.mat')
+
+load('./../../../revision/combined_posteriors.mat');
+chain = chain_stored4;
+
+%start_new = 7000;
+start_new = 5001;
 beta(:,1) = median(chain(start_new:end,6:14)) ;
 r(:,1) = median(chain(start_new:end,1:5)) ;
 phi(:,1) = median(chain(start_new:end,15:23)) ;
@@ -20,8 +26,15 @@ error_tau_seivd = std(chain(start_new:end,34:42)) ;
 %% SEIV
 
 %load('/Users/rdey33/Downloads/VIMIMO/results/local/SEIV10_00000_bepr_1001/seed95L0_datasheet.mat');
-load('./../../results/local/SEIV10_00000_bepr_1001/seed196L0_datasheet.mat');
-start_new_2 = 4000;
+
+%load('./../../../results/local/SEIV10_00000_bepr_1001/seed196L0_datasheet.mat');
+load('./../../../revision/seiv-data.mat');
+
+chain = chain_stored;
+
+%start_new_2 = 4000;
+start_new_2 = 1;
+
 beta(:,2) = median(chain(start_new_2:end,6:14)) ;
 r(:,2) = median(chain(start_new_2:end,1:5)) ;
 phi(:,2) = median(chain(start_new_2:end,15:23)) ;
@@ -117,7 +130,7 @@ boxes_onestep_error = [41,39,37,0,40,34,35,35,31];
 %%  one step vs community
 
 gap = 0.1;
-market_size_given = 12;
+market_size_given = 6;
 %color_green = [70/255,210/255,130/255];
 color_green = [171,193,157]./255;
 

@@ -10,11 +10,21 @@ viral_decay = model.viral_decay ;
 viral_adsorb = model.viral_adsorb ;
 lysis_reset = model.lysis_reset;
 debris_inhib = model.debris_inhib;
+debris_inhib2 = model.debris_inhib2;
+debris_inhib3 = model.debris_inhib3;
+debris_inhib4 = model.debris_inhib4;
+debris_inhib5 = model.debris_inhib5;
+
+
+
+diff_beta = model.diff_beta;
 NE  = round(max(max(pars.NE)));
 
 if model.name == 'SEIV'+string(model.NE)
     model = SEIV_diff_NE(model.NH,model.NV,NE);
-elseif model.name == 'SEIVD-diffabs'
+elseif strcmp(model.name,'SEIVD-diffabs-diffbeta')
+    model = SEIVD_diff_NE_diff_debris_abs_diffbeta(model.NH,model.NV,NE);
+elseif strcmp(model.name,'SEIVD-diffabs')
     model = SEIVD_diff_NE_diff_debris_abs(model.NH,model.NV,NE);
 else
     model = SEIVD_diff_NE_diff_debris(model.NH,model.NV,NE);
@@ -26,6 +36,13 @@ model.viral_decay = viral_decay;
 model.viral_adsorb = viral_adsorb;
 model.lysis_reset = lysis_reset;
 model.debris_inhib = debris_inhib;
+model.debris_inhib2 = debris_inhib2;
+model.debris_inhib3 = debris_inhib3;
+model.debris_inhib4 = debris_inhib4;
+model.debris_inhib5 = debris_inhib5;
+
+
+model.diff_beta = diff_beta;
 
 
 

@@ -85,7 +85,7 @@ end
 
 %% inference part
 
-mcmcoptions.nsimu = 1000;
+mcmcoptions.nsimu = 10000;
 transient_id = 30;
 lambda = 0;
 include_pars = {'beta','phi','tau','r','Dc','Dc2','Dc3','Dc4','Dc5'};
@@ -97,7 +97,7 @@ include_pars = {'beta','phi','tau','r','Dc','Dc2','Dc3','Dc4','Dc5'};
 % changes the sticking behavior -- more means less accurate -- so explore
 % sigma of error chain more. 
 
-mcmcmodel.sigma2 =200;%3.2052e+04/280; % (initial) error variance from residuals of the lsq fit
+mcmcmodel.sigma2 = 200; % (initial) error variance from residuals of the lsq fit
 mcmcmodel.S20 = mcmcmodel.sigma2;
 mcmcmodel.N0 =50;
 mcmcoptions.updatesigma = 1;
@@ -122,7 +122,7 @@ theta_optimized(28:32) = [0.19,0.245,0.22,0.28,0.25];
 theta_optimized(33:37) = log([5e6 6.13e6 12e6  19.3e5 16.0e5])/log(10);
 
 
-std = [2.02,68.8,50,20,21.9,43.8,79.5,50,86, 0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,   0.56,0.18,0.19,2,0.4,0.13,0.13,0.12,0.09,0.2,0.2,0.2,0.2,0.2,0.5,0.5,0.5,0.5,0.5];
+std = [2.02,68.8,50,20,21.9,43.8,79.5,50,86, 0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,   0.56,0.18,0.19,2,0.4,0.13,0.13,0.12,0.09,0.2,0.2,0.2,0.2,0.2,0.5,0.5,0.5,0.5,0.5]
 
 %%% initial values set
 for i = 1:37

@@ -14,6 +14,11 @@ classdef ode_funs
         viral_adsorb = 0; % 0 = viruses only adsorb to their hosts; 1 = viruses may adsorb to any host
         lysis_reset = 0; % 0 = no lysis reset; 1 = adsorption by new virsues resets lytic cycle from I to first E class
         debris_inhib = 0; % 0 = no debris inhibition; 1 = build-up of dead cells inhibits infection (requires defining pars.Dc)
+        debris_inhib2 = 0;
+        debris_inhib3 = 0;
+        debris_inhib4 = 0;
+        debris_inhib5 = 0;
+
         diff_beta = 0;
         %NH = 5; %% have to remove later -- this is default value
     end
@@ -29,7 +34,7 @@ classdef ode_funs
             if obj.diff_beta == 0
                 handle = @(pars,t, Imat, OH, etaeff)  (pars.beta.*etaeff.*Imat)'* OH;
             else
-                handle = @(pars,t, Imat, OH, etaeff)  ((pars.beta + (pars.beta2 - pars.beta).*heaviside(t-5).*pars.M) .*etaeff.*Imat)'* OH;
+                handle = @(pars,t, Imat, OH, etaeff)  ((pars.beta + (pars.beta2 - pars.beta).*heaviside(t-2.6*pars.tau).*pars.M) .*etaeff.*Imat)'* OH;
             end
         end
 
@@ -88,7 +93,7 @@ classdef ode_funs
             if obj.debris_inhib == 2
                 handle = @(pars,V,D) (pars.prob.*(pars.phi*V))*D; 
             else
-                handle = 0;
+                handle = @(pars,V,D) 0;
             end
         end
 
@@ -100,6 +105,7 @@ classdef ode_funs
                 handle = @(pars,D) 1/(1+D/pars.Dc)^2;
             elseif obj.debris_inhib == 2
                 handle = @(pars,D) 1./(1+(D./pars.Dc).^2); %exponent corrected
+                %handle = @(pars,D) (1+0/(1+(pars.Dc/D)^2));
             elseif obj.debris_inhib == 3
                 handle = @(pars,D) 1/(1+(pars.Dc/D)^2); %exponent corrected and reciprocal
 
@@ -108,13 +114,14 @@ classdef ode_funs
 
 
         function handle = debris_inhib_fun_second(obj)
-            if obj.debris_inhib==0
+            if obj.debris_inhib2==0
                 handle = @(pars,D) 1;
-            elseif obj.debris_inhib == 1
+            elseif obj.debris_inhib2 == 1
                 handle = @(pars,D) 1/(1+D/pars.Dc2)^2;
-            elseif obj.debris_inhib == 2
+            elseif obj.debris_inhib2 == 2
                 handle = @(pars,D) 1/(1+(D/pars.Dc2)^2); %exponent corrected
-            elseif obj.debris_inhib == 3
+                %handle = @(pars,D) (1+0/(1+(pars.Dc2/D)^2));
+            elseif obj.debris_inhib2 == 3
                 handle = @(pars,D) 1/(1+(pars.Dc2/D)^2); %exponent corrected and reciprocal
 
             end
@@ -122,13 +129,14 @@ classdef ode_funs
 
 
         function handle = debris_inhib_fun_third(obj)
-            if obj.debris_inhib==0
+            if obj.debris_inhib3==0
                 handle = @(pars,D) 1;
-            elseif obj.debris_inhib == 1
+            elseif obj.debris_inhib3 == 1
                 handle = @(pars,D) 1/(1+D/pars.Dc3)^2;
-            elseif obj.debris_inhib == 2
+            elseif obj.debris_inhib3 == 2
                 handle = @(pars,D) 1/(1+(D/pars.Dc3)^2); %exponent corrected
-            elseif obj.debris_inhib == 3
+                %handle = @(pars,D) (1+0/(1+(pars.Dc3/D)^2));
+            elseif obj.debris_inhib3 == 3
                 handle = @(pars,D) 1/(1+(pars.Dc3/D)^2); %exponent corrected and reciprocal
 
             end
@@ -136,26 +144,26 @@ classdef ode_funs
   
 
         function handle = debris_inhib_fun_fourth(obj)
-            if obj.debris_inhib==0
+            if obj.debris_inhib4==0
                 handle = @(pars,D) 1;
-            elseif obj.debris_inhib == 1
+            elseif obj.debris_inhib4 == 1
                 handle = @(pars,D) 1/(1+D/pars.Dc4)^2;
-            elseif obj.debris_inhib == 2
+            elseif obj.debris_inhib4 == 2
                 handle = @(pars,D) 1/(1+(D/pars.Dc4)^2); %exponent corrected
-            elseif obj.debris_inhib == 3
+            elseif obj.debris_inhib4 == 3
                 handle = @(pars,D) 1/(1+(pars.Dc4/D)^2); %exponent corrected and reciprocal
 
             end
         end
 
         function handle = debris_inhib_fun_fifth(obj)
-            if obj.debris_inhib==0
+            if obj.debris_inhib5==0
                 handle = @(pars,D) 1;
-            elseif obj.debris_inhib == 1
+            elseif obj.debris_inhib5 == 1
                 handle = @(pars,D) 1/(1+D/pars.Dc5)^2;
-            elseif obj.debris_inhib == 2
+            elseif obj.debris_inhib5 == 2
                 handle = @(pars,D) 1/(1+(D/pars.Dc5)^2); %exponent corrected
-            elseif obj.debris_inhib == 3
+            elseif obj.debris_inhib5 == 3
                 handle = @(pars,D) 1/(1+(pars.Dc5/D)^2); %exponent corrected and reciprocal
 
             end

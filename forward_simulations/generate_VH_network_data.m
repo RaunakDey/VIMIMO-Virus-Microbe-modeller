@@ -14,15 +14,8 @@ flags.tau_new = 0;
 addpath(genpath('./..'));
 
 %% Settings for running the model
-
-% 5 hosts 5 phages and 70ish number of boxes. Will change this later.
-model = SEIVD_diff_NE_diff_debris(10,10,70);
-model.host_growth = 0;
-model.viral_decay = 0;
-model.viral_adsorb = 0;
-model.lysis_reset = 0;
-model.debris_inhib = 2;
-
+NH = 6;
+NV = 6;
 
 
 
@@ -30,44 +23,43 @@ load('data/parameters_example','pars'); % parameters without nans
 pars1 = pars;
 load('data/parameters'); % true parameter set with nans
 
-% fixing number of compartments: obtained from one-step-inference.
-pars.NE = 10*(pars.M == 1); 
 
+%% new parameters;
+pars1.r = 0.1+ rand(NH,1)*0.2 ;
+pars1.M = randi([0 1], NH,NV);
+pars1.M = [1 0 0 0 0 0;
+    1 1 0 0 0 0;
+    0 0 1 0 0 0;
+    0 0 0 1 1 0;
+    0 0 0 1 1 0;
+    0 0 0 0 0 1];
+pars1.beta = pars1.M.*(100+200*rand(NH,NV));
+pars1.tau = pars1.M.*(1+5*rand(NH,NV));
+pars1.phi = pars1.M.*(0.5e-9+1e-8*rand(NH,NV));
+pars1.epsilon = ones(1,NH+NV);
+pars1.eta = zeros(NH,NV);
+pars1.NE = 100*pars1.M;
+pars1.a = 1*rand(NH,NH);
+pars1.m = 0.5*ones(NV,1);
 
-pars1.NE = pars.NE; %pars1 was historically created to deal with cases where there was missing values, 
-% do not worry about this for code-review now pars and pars1 are the same
-
-
-% controlling settings for debris inhibition
-if (model.debris_inhib == 1 || model.debris_inhib == 2 || model.debris_inhib == 3)
-    pars1.Dc = 7e6;
-elseif model.debris_inhib == 0
-    pars1.Dc = 15e20;
-end
-
-pars1.Dc2 = pars1.Dc;
-pars_labels.Dc2 = pars_labels.Dc;
-pars_units.Dc2 = pars_units.Dc;
-pars_labels.Dc = "";
-pars_units.Dc = "1/ml";
-
-
-
-% controlling settings for lysis reset (not used) 
-if model.lysis_reset == 1
-    pars1.epsilon_reset = 0.01;
-    pars_labels.epsilon_reset = "";
-    pars_units.epsilon_reset = "";
-end
+pars1.S0 = 3e6*ones(NH,1);
+pars1.V0 = 1e6*ones(NV,1);
+pars1.NH  = NH;
+pars1.NV = NV;
 
 % finally fix the model with given number of boxes.
-max_NE = round(max(max(pars.NE)));
-model = SEIVD_diff_NE_diff_debris(5,5,max_NE);
+max_NE = round(max(max(pars1.NE)));
+model = SEIVD_diff_NE_diff_debris_abs(NH,NV,max_NE);
 model.host_growth = 0;
-model.viral_decay = 0;
+model.viral_decay = 1;
 model.viral_adsorb = 0;
 model.lysis_reset = 0;
-model.debris_inhib = 2;
+model.debris_inhib = 0;
+model.debris_inhib2 = 0;
+model.debris_inhib3 = 0;
+model.debris_inhib4 = 0;
+model.debris_inhib5 = 0;
+
 
 
 % this was used to modify latent periods to be longer, is not used, ignore
@@ -77,8 +69,10 @@ pars1.tau = pars1.tau*flags.tau_mult;
 % a change of variable was done to test inference priors, not needed for code review
 pars1.eta(pars1.tau>0) = 1./pars1.tau(pars1.tau>0);
 
-tvec = 0:0.05:5; % for better viz
+tvec = 0:0.05:10; % for better viz
 [t1,S1,V1,D1] = simulate_ode(model,pars1,tvec,pars1.S0,pars1.V0); % initial parameter set
+
+%%
 
 figure(1)
 for i=1:model.NH
@@ -94,5 +88,6 @@ plot(t1,V1(:,i),'-',LineWidth=2); hold on; %virus
 xlabel('Time (hours)');ylabel('Phage (cells/ml)');set(gca,'Yscale','log');
 %title('Points are from averaged experimental datasets, line is from simulated SEIV model (N_E=10)')
 end
+
 
 
