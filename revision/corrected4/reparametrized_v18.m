@@ -144,6 +144,8 @@ mcmcmodel.ssfun = @(theta,data) loglike_reparam(theta,data,pars2,mcmcpars,model,
 
 %% simulate again
 
+chain = repmat(theta_start,mcmcoptions.nsimu,1) + chain.*repmat(theta_std,mcmcoptions.nsimu,1);
+
 transient_id = 50;
 pars_afterinf = update_pars(pars2,median(chain(transient_id:end, :)),mcmcpars);
 [t_after,S_after,V_after,D_after,I_after,E_after] =  simulate_ode(model,pars_afterinf,tvec,pars2.S0,pars2.V0); % mcmc parameter set
